@@ -5,10 +5,6 @@ workflows:
     environment:
       flutter: 3.22.0
       java: 17
-      android_signing:
-        - clearcut_keystore
-      vars:
-        PACKAGE_NAME: "com.clearcut.app"
     scripts:
       - name: Get Flutter packages
         script: |
@@ -17,13 +13,13 @@ workflows:
       - name: Build APK
         script: |
           cd flutter_app
-          flutter build apk --release --build-name=1.0.0 --build-number=$BUILD_NUMBER
+          flutter build apk --debug --build-name=1.0.0 --build-number=$BUILD_NUMBER
     artifacts:
-      - flutter_app/build/app/outputs/flutter-apk/app-release.apk
+      - flutter_app/build/app/outputs/flutter-apk/app-debug.apk
     publishing:
       email:
         recipients:
-          - your@email.com
+          - arbazarbaz967313@gmail.com
         notify:
           success: true
           failure: true
