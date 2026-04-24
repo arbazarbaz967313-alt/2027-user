@@ -41,16 +41,19 @@ class _VideoScreenState extends State<VideoScreen> {
     }
     setState(() { _loading = true; _status = 'Uploading video...'; });
     try {
-      final params = <String, dynamic>{};
+      // Fix: explicitly typed Map<String, dynamic>
+      final Map<String, dynamic> params = <String, dynamic>{};
       if (_tool == 'compress') params['quality'] = _quality;
       if (_tool == 'convert')  params['format']  = _format;
 
       final res = await ApiService().processVideo(_video!, tool: _tool, params: params);
       final jobId = res['job_id'] as String;
-      setState(() => _status = 'Processing... please wait');
+      setState(() => _status = 'Processing... please wait 鈴�');
       await _poll(jobId);
     } catch (e) {
-      final msg = e.toString().contains('429') ? 'Daily limit reached. Upgrade to Pro.' : 'Processing failed. Try again.';
+      final msg = e.toString().contains('429')
+        ? 'Daily limit reached. Upgrade to Pro.'
+        : 'Processing failed. Try again.';
       setState(() => _status = msg);
     } finally {
       setState(() => _loading = false);
@@ -65,10 +68,16 @@ class _VideoScreenState extends State<VideoScreen> {
         final s = res['status'] as String;
         setState(() => _status = 'Status: $s...');
         if (s == 'done') {
-          setState(() { _resultUrl = res['result_url']; _status = '✅ Done! Ready to download.'; });
+          setState(() {
+            _resultUrl = res['result_url'] as String?;
+            _status = '鉁� Done! Ready to download.';
+          });
           return;
         }
-        if (s == 'failed') { setState(() => _status = '❌ Processing failed.'); return; }
+        if (s == 'failed') {
+          setState(() => _status = '鉂� Processing failed.');
+          return;
+        }
       } catch (_) {}
     }
     setState(() => _status = 'Timed out. Check History tab later.');
@@ -83,13 +92,17 @@ class _VideoScreenState extends State<VideoScreen> {
       leading: IconButton(
         icon: Container(
           width: 36, height: 36,
-          decoration: BoxDecoration(color: const Color(0xFF0E0E24), borderRadius: BorderRadius.circular(12), border: Border.all(color: const Color(0x12FFFFFF))),
+          decoration: BoxDecoration(
+            color: const Color(0xFF0E0E24),
+            borderRadius: BorderRadius.circular(12),
+            border: Border.all(color: const Color(0x12FFFFFF)),
+          ),
           child: const Icon(Icons.arrow_back_ios_new, size: 14, color: Colors.white),
         ),
         onPressed: () => Navigator.pop(context),
       ),
       title: const Row(children: [
-        Text('🎬', style: TextStyle(fontSize: 20)),
+        Text('馃幀', style: TextStyle(fontSize: 20)),
         SizedBox(width: 8),
         Text('Video Tools', style: TextStyle(color: Colors.white, fontWeight: FontWeight.w800, fontSize: 17)),
       ]),
@@ -105,12 +118,14 @@ class _VideoScreenState extends State<VideoScreen> {
             decoration: BoxDecoration(
               color: const Color(0xFF0E0E24),
               borderRadius: BorderRadius.circular(20),
-              border: Border.all(color: _video != null ? const Color(0xFFFFD60A).withOpacity(0.3) : const Color(0x14FFFFFF)),
+              border: Border.all(color: _video != null
+                ? const Color(0xFFFFD60A).withOpacity(0.3)
+                : const Color(0x14FFFFFF)),
             ),
             child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-              Text(_video != null ? '🎬' : '📹', style: const TextStyle(fontSize: 40)),
+              Text(_video != null ? '馃幀' : '馃摴', style: const TextStyle(fontSize: 40)),
               const SizedBox(height: 8),
-              Text(_video != null ? '✓ Video selected' : 'Tap to select video',
+              Text(_video != null ? '鉁� Video selected' : 'Tap to select video',
                 style: const TextStyle(color: Colors.white, fontWeight: FontWeight.w700, fontSize: 14)),
               const SizedBox(height: 4),
               Text(_video != null ? _video!.path.split('/').last : 'MP4, MOV, AVI supported',
@@ -120,7 +135,6 @@ class _VideoScreenState extends State<VideoScreen> {
         ),
         const SizedBox(height: 20),
 
-        // Tool selector
         const Text('TOOL', style: TextStyle(color: Color(0xFF5A5A7A), fontSize: 11, letterSpacing: 2)),
         const SizedBox(height: 10),
         Wrap(spacing: 8, runSpacing: 8,
@@ -187,6 +201,7 @@ class _VideoScreenState extends State<VideoScreen> {
         ],
 
         const SizedBox(height: 20),
+
         if (_status.isNotEmpty) ...[
           Container(
             width: double.infinity, padding: const EdgeInsets.all(12),
@@ -209,13 +224,10 @@ class _VideoScreenState extends State<VideoScreen> {
               border: Border.all(color: const Color(0xFF00F5D4).withOpacity(0.2)),
             ),
             child: Row(children: [
-              const Text('✅', style: TextStyle(fontSize: 22)),
+              const Text('鉁�', style: TextStyle(fontSize: 22)),
               const SizedBox(width: 12),
               const Expanded(child: Text('File ready!', style: TextStyle(color: Color(0xFF00F5D4), fontWeight: FontWeight.w700))),
-              TextButton(
-                onPressed: () {},
-                child: const Text('Open', style: TextStyle(color: Color(0xFF00F5D4))),
-              ),
+              TextButton(onPressed: () {}, child: const Text('Open', style: TextStyle(color: Color(0xFF00F5D4)))),
             ]),
           ),
           const SizedBox(height: 16),
