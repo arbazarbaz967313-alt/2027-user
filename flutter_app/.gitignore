@@ -1,0 +1,26 @@
+# Flutter
+.dart_tool/
+.flutter-plugins
+.flutter-plugins-dependencies
+build/
+.packages
+
+# Android
+android/.gradle/
+android/local.properties
+android/key.properties
+*.jks
+*.keystore
+
+# Firebase — download from Firebase Console, don't commit
+# google-services.json  ← uncomment if you want to hide it
+# GoogleService-Info.plist
+
+# IDE
+.idea/
+.vscode/
+.DS_Store
+
+# Env
+.env
+*.env
