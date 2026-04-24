@@ -10,12 +10,23 @@ workflows:
         script: |
           cd flutter_app
           flutter pub get
+
+      - name: Set Gradle permissions
+        script: |
+          cd flutter_app/android
+          chmod +x gradlew
+
       - name: Build APK
         script: |
-          cd flutter_app
-          flutter build apk --debug --build-name=1.0.0 --build-number=$BUILD_NUMBER
+          cd flutter_app/android
+          ./gradlew assembleDebug \
+            --no-daemon \
+            --stacktrace
+
     artifacts:
+      - flutter_app/build/app/outputs/apk/debug/app-debug.apk
       - flutter_app/build/app/outputs/flutter-apk/app-debug.apk
+
     publishing:
       email:
         recipients:
