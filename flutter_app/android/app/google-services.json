@@ -8,6 +8,35 @@
   "client": [
     {
       "client_info": {
+        "mobilesdk_app_id": "1:93914740482:android:a28fd1647bfca1361e741b",
+        "android_client_info": {
+          "package_name": "com.clearcut.app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "93914740482-bovs2ucih60opm1k324pf2deqgmi2pfq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDjN72zb90c8GzasTiFx-wZHKk_XbL2XPw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "93914740482-bovs2ucih60opm1k324pf2deqgmi2pfq.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
         "mobilesdk_app_id": "1:93914740482:android:d41f8492e8db7f071e741b",
         "android_client_info": {
           "package_name": "com.synex.synex_live"
