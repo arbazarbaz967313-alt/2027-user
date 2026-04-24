@@ -1,7 +1,7 @@
 // ✅ NO SECRETS HERE — only public config
 class AppConstants {
   // 👇 Render deploy ke baad yahan apna URL daalo
-  static const String baseUrl = 'https://clearcut-api.onrender.com/api/v1';
+  static const String baseUrl = 'https://two027-backend.onrender.com';
 
   // API endpoints
   static const String me            = '$baseUrl/auth/me';
